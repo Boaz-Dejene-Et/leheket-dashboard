@@ -14,10 +14,12 @@ import {
     ListItemSecondaryAction,
     ListItemText,
     MenuItem,
+    InputLabel,
     Stack,
     TextField,
     Autocomplete,
     FormControl,
+    Select,
     TextareaAutosize,
     Typography
 } from '@mui/material';
@@ -37,11 +39,13 @@ const DashboardDefault = () => {
     const [bookCategory, setBookCategory] = useState("")
     const [edition, setEdition] = useState("")
     const [image, setImage] = useState("")
-    const [bookData, setBookData] = useState("f")
+    const [bookData, setBookData] = useState("")
     const [categories, setCategories] = useState([
         "Business", "Politics", "Romantic", "Kids", "Research", "Adventure", "Inspirational", "Law", "History"
     ])
-    const [options, SetOptions] = useState([
+    const [authors, setAuthors] = useState([])
+
+    const [options, setOptions] = useState([
         { label: 'The Shawshank Redemption', year: 1994 },
         { label: 'The Godfather', year: 1972 },
         { label: 'The Godfather: Part II', year: 1974 },
@@ -91,9 +95,40 @@ const DashboardDefault = () => {
         })
     }
 
-    // useEffect(()=>{
-    //     GetCommentsFromContactUs()
-    // },[])
+    const GetAuthors = () => {
+        const query = `query MyQuery {
+            user {
+                id
+                name
+            }
+        }`
+
+        axios.post("https://leheket-hilcoe-55.hasura.app/v1/graphql", JSON.stringify({
+            query: query
+        }),{
+            headers: {
+                "x-hasura-admin-secret": "3YX812ege3703HRPFtdbdPRIEe0iRXuO6CE9buCsn1nEjGMSxKXJZTJUrHWZiZ1b",
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }).then((res) => {
+            console.log(res.data);
+            if (res.data?.data?.user){
+                setAuthors(res.data?.data?.user)
+            }
+        }).catch((err) => {
+            console.log(err)
+            console.log(err.response?.data)
+        })
+    }
+
+    useEffect(()=>{
+        GetAuthors()
+    },[])
+
+    useEffect(()=>{
+        console.log(bookCategory)
+    },[bookCategory])
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
@@ -151,20 +186,59 @@ const DashboardDefault = () => {
                             width: "100%",
                             marginTop: "30px"
                         }}>
-                            <Autocomplete
+                            {/* <Autocomplete
                                 disablePortal
                                 id="combo-box-demo"
                                 options={options}
                                 sx={{ width: 300 }}
                                 renderInput={(params) => <TextField {...params} 
-                                    label="Author Id" 
+                                    label="Author Id"
                                     focused 
                                     color="secondary"
-                                    value={authorId}
-                                    onChange={(e)=>setAuthorId(e.target.value)} />
+                                    // value={authorId}
+                                    onChange={(e)=>{
+                                        // setAuthorId(e.target.value)
+                                        console.log(e.target.value)
+                                    }} />
                                 }
-                            />
-                            <Autocomplete
+                            /> */}
+                            <FormControl
+                                sx={{ width: 300 }}
+                            >
+                                <InputLabel id="demo-simple-select-label">Author Id</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    focused
+                                    value={authorId}
+                                    sx={{ width: 300 }}
+                                    label="Author Id"
+                                    onChange={(e)=>setAuthorId(e.target.value)}
+                                >
+                                    {authors.map(author => (
+                                        <MenuItem value={author.id}>{author.name}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <FormControl
+                                sx={{ width: 300 }}
+                            >
+                                <InputLabel id="demo-simple-select-label">Book Category</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    focused
+                                    value={bookCategory}
+                                    sx={{ width: 300 }}
+                                    label="Book Category"
+                                    onChange={(e)=>setBookCategory(e.target.value)}
+                                >
+                                    {categories.map(category => (
+                                        <MenuItem value={category}>{category}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            {/* <Autocomplete
                                 disablePortal
                                 id="combo-box-demo"
                                 options={categories}
@@ -176,7 +250,7 @@ const DashboardDefault = () => {
                                 value={bookCategory}
                                 onChange={(e)=>setBookCategory(e.target.value)} />
                                 }
-                            />
+                            /> */}
                             <TextField 
                                 label="Edition (optional)" 
                                 color="secondary" 
@@ -198,8 +272,23 @@ const DashboardDefault = () => {
                                 color="secondary" 
                                 focused 
                                 size="large"
+                                style={{
+                                    width: "45%"
+                                }}
                                 value={image}
                                 onChange={(e)=>setImage(e.target.value)} 
+                            />
+                            <TextField 
+                                label="Book data in PDF" 
+                                fullWidth 
+                                color="secondary" 
+                                focused 
+                                size="large"
+                                style={{
+                                    width: "45%"
+                                }}
+                                value={bookData}
+                                onChange={(e)=>setBookData(e.target.value)} 
                             />
                         </Grid>
                         <Button 
