@@ -3,29 +3,16 @@ import axios from 'axios';
 
 // material-ui
 import {
-    Avatar,
-    AvatarGroup,
-    Box,
     Button,
     Grid,
-    List,
-    ListItemAvatar,
-    ListItemButton,
-    ListItemSecondaryAction,
-    ListItemText,
     MenuItem,
     InputLabel,
-    Stack,
     TextField,
-    Autocomplete,
     FormControl,
     Select,
-    TextareaAutosize,
-    Typography
 } from '@mui/material';
 
 // project import
-import OrdersTable from './OrdersTable';
 import MainCard from 'components/MainCard';
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
@@ -44,16 +31,6 @@ const DashboardDefault = () => {
         "Business", "Politics", "Romantic", "Kids", "Research", "Adventure", "Inspirational", "Law", "History"
     ])
     const [authors, setAuthors] = useState([])
-
-    const [options, setOptions] = useState([
-        { label: 'The Shawshank Redemption', year: 1994 },
-        { label: 'The Godfather', year: 1972 },
-        { label: 'The Godfather: Part II', year: 1974 },
-        { label: 'The Dark Knight', year: 2008 },
-        { label: 'Dangal', year: 2016 },
-        { label: 'The Sting', year: 1973 },
-        { label: 'Monty Python and the Holy Grail', year: 1975 },
-    ])
 
     const AddBook = () => {
         let query = `mutation MyQuery($authorId: String!, $bookData: String!, $category: String!, $description: String!, $edition: String = "", $image: String!, $price: Int!, $title: String!, $subTitle: String = "") {
@@ -77,6 +54,7 @@ const DashboardDefault = () => {
               updated_at
             }
           }`
+        //   console.log("title: ", title, "subTitle: ", subTitle, "price: ", price, "description: ", description, "authorId: ", authorId, "category: ", bookCategory, "edition: ", edition, "image: ", image, "bookData: ", bookData)
 
         axios.post("https://leheket-hilcoe-55.hasura.app/v1/graphql", JSON.stringify({
             query: query,
