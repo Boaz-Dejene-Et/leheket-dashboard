@@ -45,31 +45,31 @@ const headCells = [
         id: 'trackingNo',
         align: 'left',
         disablePadding: false,
-        label: 'Tracking No.'
+        label: 'Users Id.'
     },
     {
         id: 'name',
         align: 'left',
         disablePadding: true,
-        label: 'Name'
+        label: 'Username'
     },
     {
         id: 'fat',
         align: 'right',
         disablePadding: false,
-        label: 'Message'
+        label: 'Email'
     },
     {
         id: 'carbs',
         align: 'left',
         disablePadding: false,
-        label: 'Email'
+        label: 'Role'
     },
     {
         id: 'protein',
         align: 'right',
         disablePadding: false,
-        label: 'Date'
+        label: 'Total Amount'
     }
 ];
 
@@ -101,26 +101,22 @@ OrderTableHead.propTypes = {
 
 // ==============================|| ORDER TABLE - STATUS ||============================== //
 
-const OrderStatus = ({ deliveryOption }) => {
+const OrderStatus = ({ role }) => {
     let color;
     let title;
 
-    switch (deliveryOption) {
-        case "online":
+    switch (role) {
+        case "user":
             color = 'success';
-            title = 'online';
+            title = 'User';
             break;
-        case 1:
+        case "admin":
             color = 'warning';
-            title = 'Approved';
-            break;
-        case 2:
-            color = 'error';
-            title = 'Rejected';
+            title = 'Admin';
             break;
         default:
             color = 'primary';
-            title = 'None';
+            title = 'User';
     }
 
     return (
@@ -137,10 +133,10 @@ OrderStatus.propTypes = {
 
 // ==============================|| ORDER TABLE ||============================== //
 
-export default function OrderTable({orderedBooks}) {
+export default function OrderTable({users}) {
     const [order] = useState('asc');
     const [orderBy] = useState('trackingNo');
-    console.log(orderedBooks)
+    console.log(users)
     const [selected] = useState([]);
 
     const isSelected = (trackingNo) => selected.indexOf(trackingNo) !== -1;
@@ -170,7 +166,7 @@ export default function OrderTable({orderedBooks}) {
                 >
                     <OrderTableHead order={order} orderBy={orderBy} />
                     <TableBody>
-                        {stableSort(orderedBooks, getComparator(order, orderBy)).map((row, index) => {
+                        {stableSort(users, getComparator(order, orderBy)).map((row, index) => {
                             const isItemSelected = isSelected(row.id);
                             const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -186,16 +182,16 @@ export default function OrderTable({orderedBooks}) {
                                 >
                                     <TableCell component="th" id={labelId} scope="row" align="left">
                                         <Link color="secondary" component={RouterLink} to="">
-                                            {row?.id.slice(0,8)}
+                                            {row.id.slice(0,8)}
                                         </Link>
                                     </TableCell>
-                                    <TableCell align="left">{row?.name}</TableCell>
-                                    <TableCell align="right">{row?.message.slice(0,15)}</TableCell>
+                                    <TableCell align="left">{row.name}</TableCell>
+                                    <TableCell align="right">{row.email}</TableCell>
                                     <TableCell align="left">
-                                        {row?.email}
+                                        <OrderStatus role={row.role} />
                                     </TableCell>
                                     <TableCell align="right">
-                                        {row?.created_at.slice(0,10)}
+                                        <NumberFormat value={row.amount} displayType="text" thousandSeparator prefix="Br." />
                                     </TableCell>
                                 </TableRow>
                             );

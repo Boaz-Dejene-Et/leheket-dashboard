@@ -30,6 +30,7 @@ import Transitions from 'components/@extended/Transitions';
 // assets
 import { BellOutlined, CloseOutlined, GiftOutlined, MessageOutlined, SettingOutlined } from '@ant-design/icons';
 
+
 // sx styles
 const avatarSX = {
     width: 36,
@@ -183,37 +184,39 @@ const Notification = () => {
                                     >
                                         {message && message.map((mes)=>{
                                             return (
-                                                <>
-                                                    <ListItemButton key={mes.id}>
-                                                        <ListItemAvatar>
-                                                            <Avatar
-                                                                sx={{
-                                                                    color: 'primary.main',
-                                                                    bgcolor: 'primary.lighter'
-                                                                }}
-                                                            >
-                                                                <MessageOutlined />
-                                                            </Avatar>
-                                                        </ListItemAvatar>
-                                                        <ListItemText
-                                                            primary={
-                                                                <Typography variant="h6">
-                                                                    <Typography component="span" variant="subtitle1">
-                                                                        {mes.name}
-                                                                    </Typography>{' '}
-                                                                    {mes.email}
+                                                <Link to="/notification" key={mes.id}>
+                                                    <>
+                                                        <ListItemButton key={mes.id}>
+                                                            <ListItemAvatar>
+                                                                <Avatar
+                                                                    sx={{
+                                                                        color: 'primary.main',
+                                                                        bgcolor: 'primary.lighter'
+                                                                    }}
+                                                                >
+                                                                    <MessageOutlined />
+                                                                </Avatar>
+                                                            </ListItemAvatar>
+                                                            <ListItemText
+                                                                primary={
+                                                                    <Typography variant="h6">
+                                                                        <Typography component="span" variant="subtitle1">
+                                                                            {mes.name}
+                                                                        </Typography>{' '}
+                                                                        {mes.email}
+                                                                    </Typography>
+                                                                }
+                                                                secondary={mes.created_at.slice(0, 10)}
+                                                            />
+                                                            <ListItemSecondaryAction>
+                                                                <Typography variant="caption" noWrap>
+                                                                    {mes.created_at.slice(11,16)}
                                                                 </Typography>
-                                                            }
-                                                            secondary={mes.created_at.slice(0, 10)}
-                                                        />
-                                                        <ListItemSecondaryAction>
-                                                            <Typography variant="caption" noWrap>
-                                                                {mes.created_at.slice(11,16)}
-                                                            </Typography>
-                                                        </ListItemSecondaryAction>
-                                                    </ListItemButton>
-                                                    <Divider />
-                                                </>
+                                                            </ListItemSecondaryAction>
+                                                        </ListItemButton>
+                                                        <Divider />
+                                                    </>
+                                                </Link>
                                             )
                                         })}
                                         <Link to="/notification">

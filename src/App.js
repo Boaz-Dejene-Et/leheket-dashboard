@@ -6,6 +6,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from 'layout/MainLayout';
 
 import { lazy, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // project import
 import Loadable from 'components/Loadable';
@@ -20,6 +22,7 @@ const OrderedBooks = Loadable(lazy(() => import('pages/ordered-books')));
 const Users = Loadable(lazy(() => import('pages/users')));
 const Notification = Loadable(lazy(() => import('pages/notification')));
 const AddBook = Loadable(lazy(() => import('pages/add-book')));
+const Books = Loadable(lazy(() => import('pages/books')));
 
 // render - sample page
 const SamplePage = Loadable(lazy(() => import('pages/extra-pages/SamplePage')));
@@ -33,22 +36,20 @@ const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons'
 // render - login
 const AuthLogin = Loadable(lazy(() => import('pages/authentication/Login')));
 
-// ==============================|| APP - THEME, ROUTER, LOCAL  ||============================== //
-
 const App = () => {
     const isAuth = useSelector((state) => state.menu.isAuth);
-    const state = useSelector((state) => state);
-    console.log(state)
 
     return(
         <ThemeCustomization>
             <ScrollTop>
+                <ToastContainer />
                 {/* <Routes /> */}
                 <Routes>
                     {isAuth ? (
                         <Route path="/" element={<MainLayout />}>
                             <Route path="/" element={<DashboardDefault />} />
                             <Route path="ordered-books" element={<OrderedBooks />} />
+                            <Route path="books" element={<Books />} />
                             <Route path="users" element={<Users />} />
                             <Route path="notification" element={<Notification />} />
                             <Route path="add_book" element={<AddBook />} />

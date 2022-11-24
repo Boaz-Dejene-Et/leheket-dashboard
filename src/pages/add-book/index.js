@@ -14,6 +14,7 @@ import {
 
 // project import
 import MainCard from 'components/MainCard';
+import { toast } from 'react-toastify';
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
@@ -58,7 +59,7 @@ const DashboardDefault = () => {
 
         axios.post("https://leheket-hilcoe-55.hasura.app/v1/graphql", JSON.stringify({
             query: query,
-            variables: {title: title, subTitle: subTitle, price: price, description: description, authorId: authorId, category: bookCategory, edition: edition, image, bookData: bookData}
+            variables: {title: title, subTitle: subTitle, price: price, description: description, authorId: authorId, category: bookCategory, edition: edition, image: image, bookData: bookData}
         }),{
             headers: {
                 "x-hasura-admin-secret": "3YX812ege3703HRPFtdbdPRIEe0iRXuO6CE9buCsn1nEjGMSxKXJZTJUrHWZiZ1b",
@@ -67,6 +68,9 @@ const DashboardDefault = () => {
             }
         }).then((res) => {
             console.log(res.data);
+            if(res.data?.data?.insert_books_one) {
+                toast.success("Book Added")
+            }
         }).catch((err) => {
             console.log(err)
             console.log(err.response?.data)

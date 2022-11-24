@@ -24,7 +24,7 @@ const AnalyticEcommerce = ({ color, title, count, percentage, isLoss, extra }) =
                     </Typography>
                 </Grid>
                 {/* {percentage && ( */}
-                    <Grid item>
+                    {/* <Grid item>
                         <Chip
                             variant="combined"
                             color={color}
@@ -38,17 +38,17 @@ const AnalyticEcommerce = ({ color, title, count, percentage, isLoss, extra }) =
                             sx={{ ml: 1.25, pl: 1 }}
                             size="small"
                         />
-                    </Grid>
+                    </Grid> */}
                 {/* )} */}
             </Grid>
         </Stack>
         <Box sx={{ pt: 2.25 }}>
             <Typography variant="caption" color="textSecondary">
-                You have increased your productivity{' '}
+                This years expectation is{' '}
                 <Typography component="span" variant="caption" sx={{ color: `${color || 'primary'}.main` }}>
                     {extra}
                 </Typography>{' '}
-                this year
+                amount
             </Typography>
         </Box>
     </MainCard>

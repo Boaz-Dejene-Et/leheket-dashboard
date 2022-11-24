@@ -1,10 +1,13 @@
 // assets
-import { DashboardOutlined, UserOutlined } from '@ant-design/icons';
+import { DashboardOutlined, UserOutlined, ReadOutlined, DollarCircleOutlined, AppstoreAddOutlined } from '@ant-design/icons';
 
 // icons
 const icons = {
     DashboardOutlined,
-    UserOutlined
+    UserOutlined,
+    ReadOutlined,
+    DollarCircleOutlined,
+    AppstoreAddOutlined
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -19,7 +22,7 @@ const dashboard = {
             title: 'Dashboard',
             type: 'item',
             url: '/',
-            icon: icons.DashboardOutlined,
+            icon: icons.AppstoreAddOutlined,
             breadcrumbs: false
         },
         {
@@ -35,7 +38,15 @@ const dashboard = {
             title: 'Ordered Books',
             type: 'item',
             url: '/ordered-books',
-            icon: icons.UserOutlined,
+            icon: icons.DollarCircleOutlined,
+            breadcrumbs: false
+        },
+        {
+            id: 'books',
+            title: 'Books',
+            type: 'item',
+            url: '/books',
+            icon: icons.ReadOutlined,
             breadcrumbs: false
         }
     ]

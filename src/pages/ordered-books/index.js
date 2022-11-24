@@ -151,10 +151,17 @@ const DashboardDefault = () => {
                 <AnalyticEcommerce title="Total Orders" count={totalOrders} percentage={70.5} extra="8,900" />
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={3}>
-                <AnalyticEcommerce title="Total Ordered Books" count={totalOrderedBooks} percentage={27.4} isLoss color="warning" extra="1,943" />
+                <AnalyticEcommerce title="Total Ordered Books" count={totalOrderedBooks} percentage={27.4} color="warning" extra="1,943" />
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={3}>
-                <AnalyticEcommerce title="Total Books" count={totalBooks} percentage={27.4} isLoss color="warning" extra="$20,395" />
+                <AnalyticEcommerce 
+                    title="Total Books" 
+                    count={totalBooks} 
+                    percentage={27.4} 
+                    // isLoss 
+                    color="warning" 
+                    extra="20,395" 
+                />
             </Grid>
 
             <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />

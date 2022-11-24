@@ -5,7 +5,6 @@ import axios from 'axios';
 import {
     Avatar,
     AvatarGroup,
-    Box,
     Button,
     Grid,
     List,
@@ -13,27 +12,18 @@ import {
     ListItemButton,
     ListItemSecondaryAction,
     ListItemText,
-    MenuItem,
     Stack,
-    TextField,
     Typography
 } from '@mui/material';
 
 // project import
 import OrdersTable from './OrdersTable';
-import IncomeAreaChart from './IncomeAreaChart';
-import MonthlyBarChart from './MonthlyBarChart';
-import ReportAreaChart from './ReportAreaChart';
-import SalesColumnChart from './SalesColumnChart';
 import MainCard from 'components/MainCard';
 import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
 
 // assets
-import { GiftOutlined, MessageOutlined, SettingOutlined } from '@ant-design/icons';
-import avatar1 from 'assets/images/users/avatar-1.png';
-import avatar2 from 'assets/images/users/avatar-2.png';
+import { GiftOutlined } from '@ant-design/icons';
 import avatar3 from 'assets/images/users/avatar-3.png';
-import avatar4 from 'assets/images/users/avatar-4.png';
 
 // avatar style
 const avatarSX = {
@@ -52,27 +42,9 @@ const actionSX = {
     transform: 'none'
 };
 
-// sales report status
-const status = [
-    {
-        value: 'today',
-        label: 'Today'
-    },
-    {
-        value: 'month',
-        label: 'This Month'
-    },
-    {
-        value: 'year',
-        label: 'This Year'
-    }
-];
-
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
 const DashboardDefault = () => {
-    const [value, setValue] = useState('today');
-    const [slot, setSlot] = useState('week');
     const [orderedBooks, setOrderedBooks] = useState([]);
     const [totalOrders, setTotalOrders] = useState(0);
     const [totalOrderedBooks, setTotalOrderedBooks] = useState(0);
@@ -126,13 +98,13 @@ const DashboardDefault = () => {
             }
         }).then((res) => {
             console.log(res.data);
-            // if(res.data?.data?.orders) {
+            if(res.data?.data?.orders) {
                 setOrderedBooks(res.data?.data?.orders)
                 setTotalOrders(res.data?.data?.orders_aggregate?.aggregate?.count)
                 setTotalOrderedBooks(res.data?.data?.orderedBooks_aggregate?.aggregate?.count)
                 setTotalUsers(res.data?.data?.user_aggregate?.aggregate?.count)
                 setTotalBooks(res.data?.data?.books_aggregate?.aggregate?.count)
-            // }
+            }
         }).catch((err) => {
             console.log(err)
             console.log(err.response?.data)
@@ -145,26 +117,25 @@ const DashboardDefault = () => {
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-            {/* row 1 */}
+
             <Grid item xs={12} sx={{ mb: -2.25 }}>
                 <Typography variant="h5">Dashboard</Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={3}>
-                <AnalyticEcommerce title="Total Users" count={totalUsers} />
+                <AnalyticEcommerce title="Total Users" count={totalUsers} extra="35,000" />
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={3}>
-                <AnalyticEcommerce title="Total Orders" count={totalOrders} />
+                <AnalyticEcommerce title="Total Orders" count={totalOrders} extra="8,900" />
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={3}>
-                <AnalyticEcommerce title="Total Ordered Books" count={totalOrderedBooks} />
+                <AnalyticEcommerce title="Total Ordered Books" count={totalOrderedBooks} color="warning" extra="1,943" />
             </Grid>
             <Grid item xs={12} sm={6} md={4} lg={3}>
-                <AnalyticEcommerce title="Total Books" count={totalBooks} />
+                <AnalyticEcommerce title="Total Books" count={totalBooks} color="warning" extra="20,395" />
             </Grid>
 
             <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
 
-            {/* row 3 */}
             <Grid item xs={12} md={7} lg={8}>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
@@ -215,9 +186,6 @@ const DashboardDefault = () => {
                                             <Typography variant="subtitle1" noWrap>
                                                 + ${item.amount}
                                             </Typography>
-                                            {/* <Typography variant="h6" color="secondary" noWrap>
-                                                78%
-                                            </Typography> */}
                                         </Stack>
                                     </ListItemSecondaryAction>
                                 </ListItemButton>
