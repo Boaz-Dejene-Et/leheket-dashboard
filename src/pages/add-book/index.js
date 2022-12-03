@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
-// material-ui
 import {
     Button,
     Grid,
@@ -11,12 +9,8 @@ import {
     FormControl,
     Select,
 } from '@mui/material';
-
-// project import
 import MainCard from 'components/MainCard';
 import { toast } from 'react-toastify';
-
-// ==============================|| DASHBOARD - DEFAULT ||============================== //
 
 const DashboardDefault = () => {
     const [title, setTitle] = useState("")
@@ -28,9 +22,9 @@ const DashboardDefault = () => {
     const [edition, setEdition] = useState("")
     const [image, setImage] = useState("")
     const [bookData, setBookData] = useState("")
-    const [categories, setCategories] = useState([
+    const categories = [
         "Business", "Politics", "Romantic", "Kids", "Research", "Adventure", "Inspirational", "Law", "History"
-    ])
+    ]
     const [authors, setAuthors] = useState([])
 
     const AddBook = () => {
@@ -114,8 +108,6 @@ const DashboardDefault = () => {
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-
-            {/* row 3 */}
             <Grid item xs={12} md={12} lg={12}>
                 <FormControl onSubmit={AddBook} sx={{ width: "100%" }} item xs={12} md={12} lg={12}>
                     <MainCard sx={{ mt: 2, pb: 2, pl: 2, pr: 2, pt: 3 }} content={false}>

@@ -1,15 +1,8 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import axios from 'axios';
-
-// material-ui
 import { Box, Link, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-
-// third-party
 import NumberFormat from 'react-number-format';
-
-// project import
 import Dot from 'components/@extended/Dot';
 
 function descendingComparator(a, b, orderBy) {
@@ -37,8 +30,6 @@ function stableSort(array, comparator) {
     });
     return stabilizedThis.map((el) => el[0]);
 }
-
-// ==============================|| ORDER TABLE - HEADER CELL ||============================== //
 
 const headCells = [
     {
@@ -85,7 +76,6 @@ const headCells = [
     }
 ];
 
-// ==============================|| ORDER TABLE - HEADER ||============================== //
 
 function OrderTableHead({ order, orderBy }) {
     return (
@@ -110,8 +100,6 @@ OrderTableHead.propTypes = {
     order: PropTypes.string,
     orderBy: PropTypes.string
 };
-
-// ==============================|| ORDER TABLE - STATUS ||============================== //
 
 const OrderStatus = ({ availability }) => {
     let color;
@@ -139,12 +127,9 @@ OrderStatus.propTypes = {
     status: PropTypes.number
 };
 
-// ==============================|| ORDER TABLE ||============================== //
-
 export default function OrderTable({books}) {
     const [order] = useState('asc');
     const [orderBy] = useState('trackingNo');
-    console.log(books)
     const [selected] = useState([]);
 
     const isSelected = (trackingNo) => selected.indexOf(trackingNo) !== -1;

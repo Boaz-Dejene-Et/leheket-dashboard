@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
-// material-ui
 import {
     Avatar,
     AvatarGroup,
@@ -15,24 +13,18 @@ import {
     Stack,
     Typography
 } from '@mui/material';
-
-// project import
 import OrdersTable from './OrdersTable';
 import MainCard from 'components/MainCard';
 import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
-
-// assets
 import { GiftOutlined } from '@ant-design/icons';
 import avatar3 from 'assets/images/users/avatar-3.png';
 
-// avatar style
 const avatarSX = {
     width: 36,
     height: 36,
     fontSize: '1rem'
 };
 
-// action style
 const actionSX = {
     mt: 0.75,
     ml: 1,
@@ -41,8 +33,6 @@ const actionSX = {
     alignSelf: 'flex-start',
     transform: 'none'
 };
-
-// ==============================|| DASHBOARD - DEFAULT ||============================== //
 
 const DashboardDefault = () => {
     const [orderedBooks, setOrderedBooks] = useState([]);

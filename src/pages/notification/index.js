@@ -1,29 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
-// material-ui
 import {
-    Avatar,
-    AvatarGroup,
-    Box,
-    Button,
     Grid,
-    List,
-    ListItemAvatar,
-    ListItemButton,
-    ListItemSecondaryAction,
-    ListItemText,
-    MenuItem,
-    Stack,
-    TextField,
     Typography
 } from '@mui/material';
-
-// project import
 import OrdersTable from './OrdersTable';
 import MainCard from 'components/MainCard';
-
-// ==============================|| DASHBOARD - DEFAULT ||============================== //
 
 const DashboardDefault = () => {
     const [userFeedback, setUserFeedback] = useState([]);
@@ -49,9 +31,9 @@ const DashboardDefault = () => {
             }
         }).then((res) => {
             console.log(res.data);
-            // if(res.data?.data?.contactUs) {
-            setUserFeedback(res.data?.data?.contactUs)
-            // }
+            if(res.data?.data?.contactUs) {
+                setUserFeedback(res.data?.data?.contactUs)
+            }
         }).catch((err) => {
             console.log(err)
             console.log(err.response?.data)
@@ -64,8 +46,6 @@ const DashboardDefault = () => {
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
-
-            {/* row 3 */}
             <Grid item xs={12} md={12} lg={12}>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
