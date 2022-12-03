@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 
 // project import
-import Users from './UsersTable';
+import Books from './BooksTable';
 import MainCard from 'components/MainCard';
 import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
 
@@ -69,7 +69,7 @@ const status = [
 const DashboardDefault = () => {
     const [value, setValue] = useState('today');
     const [slot, setSlot] = useState('week');
-    const [users, setUsers] = useState([]);
+    const [books, setBooks] = useState([]);
     const [totalOrders, setTotalOrders] = useState(0);
     const [totalOrderedBooks, setTotalOrderedBooks] = useState(0);
     const [totalUsers, setTotalUsers] = useState(0);
@@ -97,12 +97,24 @@ const DashboardDefault = () => {
                 count
               }
             }
-            user {
-              amount
-              email
-              id
-              name
-              role
+            books {
+                authorId
+                availability
+                bookData
+                category
+                created_at
+                description
+                discount
+                edition
+                id
+                image
+                price
+                publisher
+                sold
+                subTitle
+                title
+                totalAmountLeft
+                updated_at
             }
           }
           `
@@ -117,8 +129,8 @@ const DashboardDefault = () => {
             }
         }).then((res) => {
             console.log(res.data);
-            if(res.data?.data?.user) {
-                setUsers(res.data?.data?.user)
+            if(res.data?.data?.books) {
+                setBooks(res.data?.data?.books)
                 setTotalOrders(res.data?.data?.orders_aggregate?.aggregate?.count)
                 setTotalOrderedBooks(res.data?.data?.orderedBooks_aggregate?.aggregate?.count)
                 setTotalUsers(res.data?.data?.user_aggregate?.aggregate?.count)
@@ -135,8 +147,8 @@ const DashboardDefault = () => {
     },[])
 
     useEffect(()=>{
-        console.log(users)
-    },[users])
+        console.log(books)
+    },[books])
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>
@@ -164,12 +176,12 @@ const DashboardDefault = () => {
             <Grid item xs={12} md={12} lg={12}>
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
-                        <Typography variant="h5">Users</Typography>
+                        <Typography variant="h5">Books</Typography>
                     </Grid>
                     <Grid item />
                 </Grid>
                 <MainCard sx={{ mt: 2 }} content={false}>
-                    <Users users={users} />
+                    <Books books={books} />
                 </MainCard>
             </Grid>
 

@@ -45,19 +45,31 @@ const headCells = [
         id: 'trackingNo',
         align: 'left',
         disablePadding: false,
-        label: 'Users Id.'
+        label: 'Book Id.'
     },
     {
         id: 'name',
         align: 'left',
         disablePadding: true,
-        label: 'Username'
+        label: 'title'
+    },
+    {
+        id: 'fatw',
+        align: 'left',
+        disablePadding: false,
+        label: 'Email'
     },
     {
         id: 'fat',
         align: 'right',
         disablePadding: false,
-        label: 'Email'
+        label: 'Link'
+    },
+    {
+        id: 'fat',
+        align: 'right',
+        disablePadding: false,
+        label: 'Sold'
     },
     {
         id: 'carbs',
@@ -69,7 +81,7 @@ const headCells = [
         id: 'protein',
         align: 'right',
         disablePadding: false,
-        label: 'Total Amount'
+        label: 'Price'
     }
 ];
 
@@ -101,22 +113,18 @@ OrderTableHead.propTypes = {
 
 // ==============================|| ORDER TABLE - STATUS ||============================== //
 
-const OrderStatus = ({ role }) => {
+const OrderStatus = ({ availability }) => {
     let color;
     let title;
 
-    switch (role) {
-        case "user":
+    switch (availability) {
+        case true:
             color = 'success';
-            title = 'User';
-            break;
-        case "admin":
-            color = 'warning';
-            title = 'Admin';
+            title = 'Available';
             break;
         default:
-            color = 'primary';
-            title = 'User';
+            color = 'warning';
+            title = 'unavailable';
     }
 
     return (
@@ -133,10 +141,10 @@ OrderStatus.propTypes = {
 
 // ==============================|| ORDER TABLE ||============================== //
 
-export default function OrderTable({users}) {
+export default function OrderTable({books}) {
     const [order] = useState('asc');
     const [orderBy] = useState('trackingNo');
-    console.log(users)
+    console.log(books)
     const [selected] = useState([]);
 
     const isSelected = (trackingNo) => selected.indexOf(trackingNo) !== -1;
@@ -166,7 +174,7 @@ export default function OrderTable({users}) {
                 >
                     <OrderTableHead order={order} orderBy={orderBy} />
                     <TableBody>
-                        {stableSort(users, getComparator(order, orderBy)).map((row, index) => {
+                        {stableSort(books, getComparator(order, orderBy)).map((row, index) => {
                             const isItemSelected = isSelected(row.id);
                             const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -185,13 +193,19 @@ export default function OrderTable({users}) {
                                             {row.id.slice(0,8)}
                                         </Link>
                                     </TableCell>
-                                    <TableCell align="left">{row.name}</TableCell>
-                                    <TableCell align="right">{row.email}</TableCell>
+                                    <TableCell align="left">{row.title}</TableCell>
+                                    <TableCell align="left">{row.title}</TableCell>
+                                    <TableCell align="right">
+                                        <a style={{color: "#000"}} href={`${row.bookData}`} target="_blank">
+                                            Link
+                                        </a>
+                                    </TableCell>
+                                    <TableCell align="right">{row.sold}</TableCell>
                                     <TableCell align="left">
-                                        <OrderStatus role={row.role} />
+                                        <OrderStatus availability={row.availability} />
                                     </TableCell>
                                     <TableCell align="right">
-                                        <NumberFormat value={row.amount} displayType="text" thousandSeparator prefix="Br." />
+                                        <NumberFormat value={row.price} displayType="text" thousandSeparator prefix="Br." />
                                     </TableCell>
                                 </TableRow>
                             );
