@@ -15,7 +15,7 @@ const DashboardDefault = () => {
     const [totalUsers, setTotalUsers] = useState(0);
     const [totalBooks, setTotalBooks] = useState(0);
 
-    const GetOrders = () => {
+    const GetBooks = () => {
         const query = `query MyQuery {
             orders_aggregate {
               aggregate {
@@ -83,7 +83,7 @@ const DashboardDefault = () => {
     }
 
     useEffect(()=>{
-        GetOrders()
+        GetBooks()
     },[])
 
     useEffect(()=>{

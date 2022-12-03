@@ -27,6 +27,7 @@ const DashboardDefault = () => {
               totalBooks
               user {
                 name
+                amount
               }
             }
             orders_aggregate {

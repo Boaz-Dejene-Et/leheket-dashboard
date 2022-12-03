@@ -1,10 +1,5 @@
-// material-ui
 import { createTheme } from '@mui/material/styles';
-
-// third-party
 import { presetPalettes } from '@ant-design/colors';
-
-// project import
 import ThemeOption from './theme';
 
 const Palette = (mode) => {

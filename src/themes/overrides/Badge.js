@@ -1,5 +1,3 @@
-// ==============================|| OVERRIDES - BADGE ||============================== //
-
 export default function Badge(theme) {
     return {
         MuiBadge: {

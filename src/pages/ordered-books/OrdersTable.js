@@ -5,10 +5,6 @@ import { Box, Link, Stack, Table, TableBody, TableCell, TableContainer, TableHea
 import NumberFormat from 'react-number-format';
 import Dot from 'components/@extended/Dot';
 
-function createData(trackingNo, name, fat, carbs, protein) {
-    return { trackingNo, name, fat, carbs, protein };
-}
-
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
         return -1;
@@ -46,22 +42,34 @@ const headCells = [
         id: 'name',
         align: 'left',
         disablePadding: true,
-        label: 'Product Name'
+        label: 'Name'
     },
     {
-        id: 'fat',
+        id: 'Payment Method',
+        align: 'left',
+        disablePadding: false,
+        label: 'Payment Method'
+    },
+    {
+        id: 'Amount Left',
+        align: 'left',
+        disablePadding: false,
+        label: 'Amount Left'
+    },
+    {
+        id: 'Total Order',
         align: 'right',
         disablePadding: false,
         label: 'Total Order'
     },
     {
-        id: 'carbs',
+        id: 'Delivery',
         align: 'left',
         disablePadding: false,
         label: 'Delivery'
     },
     {
-        id: 'protein',
+        id: 'Total Amount',
         align: 'right',
         disablePadding: false,
         label: 'Total Amount'
@@ -165,7 +173,7 @@ export default function OrderTable({orderedBooks}) {
 
                             return (
                                 <TableRow
-                                    hover
+                                    // hover
                                     role="checkbox"
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     aria-checked={isItemSelected}
@@ -179,6 +187,8 @@ export default function OrderTable({orderedBooks}) {
                                         </Link>
                                     </TableCell>
                                     <TableCell align="left">{row.user?.name}</TableCell>
+                                    <TableCell align="left">{row.paymentMethod}</TableCell>
+                                    <TableCell align="left">{row.user?.amount}</TableCell>
                                     <TableCell align="right">{row.totalBooks}</TableCell>
                                     <TableCell align="left">
                                         <OrderStatus deliveryOption={row.deliveryOption} />

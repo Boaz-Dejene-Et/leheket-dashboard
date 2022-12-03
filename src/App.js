@@ -3,27 +3,19 @@ import ThemeCustomization from 'themes';
 import ScrollTop from 'components/ScrollTop';
 import { Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from 'layout/MainLayout';
-
-// import Toast message
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-// project import
 import Loadable from 'components/Loadable';
 import MinimalLayout from 'layout/MinimalLayout';
-
-// redux
 import { useSelector } from "react-redux";
 
-// render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
 const OrderedBooks = Loadable(lazy(() => import('pages/ordered-books')));
 const Users = Loadable(lazy(() => import('pages/users')));
 const Notification = Loadable(lazy(() => import('pages/notification')));
 const AddBook = Loadable(lazy(() => import('pages/add-book')));
 const Books = Loadable(lazy(() => import('pages/books')));
-
-// render - login
+const EditBook = Loadable(lazy(() => import('pages/books/edit-book')));
 const AuthLogin = Loadable(lazy(() => import('pages/authentication/Login')));
 
 const App = () => {
@@ -39,9 +31,10 @@ const App = () => {
                             <Route path="/" element={<DashboardDefault />} />
                             <Route path="ordered-books" element={<OrderedBooks />} />
                             <Route path="books" element={<Books />} />
+                            <Route path="books/edit-book/:id" element={<EditBook />} />
+                            <Route path="add_book" element={<AddBook />} />
                             <Route path="users" element={<Users />} />
                             <Route path="notification" element={<Notification />} />
-                            <Route path="add_book" element={<AddBook />} />
                         </Route>
                     ) : (
                         <>

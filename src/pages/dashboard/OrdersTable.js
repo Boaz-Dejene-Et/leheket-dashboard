@@ -170,11 +170,15 @@ export default function OrderTable({orderedBooks}) {
                                     selected={isItemSelected}
                                 >
                                     <TableCell component="th" id={labelId} scope="row" align="left">
-                                        <Link color="secondary" component={RouterLink} to="">
+                                        <Link color="secondary" component={RouterLink} to="ordered-books">
                                             {row.id.slice(0,8)}
                                         </Link>
                                     </TableCell>
-                                    <TableCell align="left">{row.user?.name}</TableCell>
+                                    <TableCell align="left">
+                                        <Link color="secondary" component={RouterLink} to="ordered-books">
+                                            {row.user?.name}
+                                        </Link>
+                                    </TableCell>
                                     <TableCell align="right">{row.totalBooks}</TableCell>
                                     <TableCell align="left">
                                         <OrderStatus deliveryOption={row.deliveryOption} />

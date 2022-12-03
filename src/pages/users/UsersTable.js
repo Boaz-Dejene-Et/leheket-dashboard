@@ -157,7 +157,7 @@ export default function OrderTable({users}) {
 
                             return (
                                 <TableRow
-                                    hover
+                                    // hover
                                     role="checkbox"
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     aria-checked={isItemSelected}

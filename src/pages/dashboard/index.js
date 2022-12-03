@@ -17,7 +17,8 @@ import OrdersTable from './OrdersTable';
 import MainCard from 'components/MainCard';
 import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
 import { GiftOutlined } from '@ant-design/icons';
-import avatar3 from 'assets/images/users/avatar-3.png';
+import avatar3 from 'assets/images/users/avatar-3.jpg';
+import { useNavigate } from 'react-router-dom';
 
 const avatarSX = {
     width: 36,
@@ -35,6 +36,7 @@ const actionSX = {
 };
 
 const DashboardDefault = () => {
+    const navigate = useNavigate();
     const [orderedBooks, setOrderedBooks] = useState([]);
     const [totalOrders, setTotalOrders] = useState(0);
     const [totalOrderedBooks, setTotalOrderedBooks] = useState(0);
@@ -159,7 +161,7 @@ const DashboardDefault = () => {
                     >
                         {orderedBooks.map((item, index) => {
                             return (
-                                <ListItemButton divider key={index}>
+                                <ListItemButton divider key={index} onClick={()=>navigate('/ordered-books')}>
                                     <ListItemAvatar>
                                         <Avatar
                                             sx={{

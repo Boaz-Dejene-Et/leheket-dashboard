@@ -33,46 +33,52 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'trackingNo',
+        id: 'Book Id.',
         align: 'left',
         disablePadding: false,
         label: 'Book Id.'
     },
     {
-        id: 'name',
+        id: 'title',
         align: 'left',
         disablePadding: true,
         label: 'title'
     },
     {
-        id: 'fatw',
+        id: 'Email',
         align: 'left',
         disablePadding: false,
         label: 'Email'
     },
     {
-        id: 'fat',
+        id: 'Link',
         align: 'right',
         disablePadding: false,
         label: 'Link'
     },
     {
-        id: 'fat',
+        id: 'Sold',
         align: 'right',
         disablePadding: false,
         label: 'Sold'
     },
     {
-        id: 'carbs',
+        id: 'Role',
         align: 'left',
         disablePadding: false,
         label: 'Role'
     },
     {
-        id: 'protein',
+        id: 'Price',
         align: 'right',
         disablePadding: false,
         label: 'Price'
+    },
+    {
+        id: 'Edit Link',
+        align: 'right',
+        disablePadding: false,
+        label: 'Edit Link'
     }
 ];
 
@@ -191,6 +197,11 @@ export default function OrderTable({books}) {
                                     </TableCell>
                                     <TableCell align="right">
                                         <NumberFormat value={row.price} displayType="text" thousandSeparator prefix="Br." />
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        <Link style={{color: "#000"}} component={RouterLink} to={`edit-book/${row.id}`}>
+                                            Edit Book
+                                        </Link>
                                     </TableCell>
                                 </TableRow>
                             );

@@ -1,5 +1,3 @@
-// ==============================|| OVERRIDES - TABLE CELL ||============================== //
-
 export default function TableCell(theme) {
     return {
         MuiTableCell: {
