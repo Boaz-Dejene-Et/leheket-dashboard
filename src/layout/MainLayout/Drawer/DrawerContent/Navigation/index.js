@@ -1,11 +1,6 @@
-// material-ui
 import { Box, Typography } from '@mui/material';
-
-// project import
 import NavGroup from './NavGroup';
 import menuItem from 'menu-items';
-
-// ==============================|| DRAWER CONTENT - NAVIGATION ||============================== //
 
 const Navigation = () => {
     const navGroups = menuItem.items.map((item) => {
@@ -15,7 +10,7 @@ const Navigation = () => {
             default:
                 return (
                     <Typography key={item.id} variant="h6" color="error" align="center">
-                        Fix - Navigation Group
+                        
                     </Typography>
                 );
         }

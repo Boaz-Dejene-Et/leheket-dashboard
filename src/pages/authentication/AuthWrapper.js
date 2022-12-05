@@ -2,11 +2,9 @@ import PropTypes from 'prop-types';
 import { Box, Grid } from '@mui/material';
 import AuthCard from './AuthCard';
 import Logo from 'components/Logo';
-import AuthBackground from 'assets/images/auth/AuthBackground';
 
 const AuthWrapper = ({ children }) => (
     <Box sx={{ minHeight: '100vh' }}>
-        <AuthBackground />
         <Grid
             container
             direction="column"
