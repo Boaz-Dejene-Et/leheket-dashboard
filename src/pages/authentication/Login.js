@@ -1,19 +1,9 @@
-// project import
-import AuthLogin from './auth-forms/AuthLogin';
 import AuthWrapper from './AuthWrapper';
-
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-
-// material-ui
+import React, {useState} from 'react';
 import {
     Button,
-    Checkbox,
-    Divider,
-    FormControlLabel,
     FormHelperText,
     Grid,
-    Link,
     IconButton,
     InputAdornment,
     InputLabel,
@@ -21,30 +11,17 @@ import {
     Stack,
     Typography
 } from '@mui/material';
-
-// third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-
-// project import
 import AnimateButton from 'components/@extended/AnimateButton';
-
-// assets
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-
-// types
 import { login } from 'store/reducers/menu';
-
-// Redux
-import { useDispatch, useSelector } from 'react-redux';
-
-// ================================|| LOGIN ||================================ //
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
     const dispatch = useDispatch();
-    const [checked, setChecked] = React.useState(false);
 
-    const [showPassword, setShowPassword] = React.useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
@@ -56,9 +33,12 @@ const Login = () => {
     const handleSubmitNew = (e) => {
         e.preventDefault()
         if(e.target.email.value == "boazdeju@gmail.com" && e.target.password.value == "123456") {
-            // dispatch
             console.log(e.target.email.value, e.target.password.value)
-            dispatch(login({ isAuth: true }));
+            dispatch(login({ isAuth: true, role: "Admin" }));
+        } else {
+            dispatch(login({ isAuth: true, role: "Employee" }));
+            // e.target.email.value
+            // e.target.password.value
         }
     }
 
@@ -148,26 +128,6 @@ const Login = () => {
                                                 {errors.password}
                                             </FormHelperText>
                                         )}
-                                    </Stack>
-                                </Grid>
-
-                                <Grid item xs={12} sx={{ mt: -1 }}>
-                                    <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    checked={checked}
-                                                    onChange={(event) => setChecked(event.target.checked)}
-                                                    name="checked"
-                                                    color="primary"
-                                                    size="small"
-                                                />
-                                            }
-                                            label={<Typography variant="h6">Keep me sign in</Typography>}
-                                        />
-                                        <Link variant="h6" component={RouterLink} to="" color="text.primary">
-                                            Forgot Password?
-                                        </Link>
                                     </Stack>
                                 </Grid>
                                 {errors.submit && (

@@ -14,6 +14,8 @@ const OrderedBooks = Loadable(lazy(() => import('pages/ordered-books')));
 const Users = Loadable(lazy(() => import('pages/users')));
 const Notification = Loadable(lazy(() => import('pages/notification')));
 const AddBook = Loadable(lazy(() => import('pages/add-book')));
+const Employees = Loadable(lazy(() => import('pages/employees')));
+const AddEmployee = Loadable(lazy(() => import('pages/add-employee')));
 const Books = Loadable(lazy(() => import('pages/books')));
 const EditBook = Loadable(lazy(() => import('pages/books/edit-book')));
 const AuthLogin = Loadable(lazy(() => import('pages/authentication/Login')));
@@ -33,6 +35,8 @@ const App = () => {
                             <Route path="books" element={<Books />} />
                             <Route path="books/edit-book/:id" element={<EditBook />} />
                             <Route path="add_book" element={<AddBook />} />
+                            <Route path="employees" element={<Employees />} />
+                            <Route path="add_employee" element={<AddEmployee />} />
                             <Route path="users" element={<Users />} />
                             <Route path="notification" element={<Notification />} />
                         </Route>

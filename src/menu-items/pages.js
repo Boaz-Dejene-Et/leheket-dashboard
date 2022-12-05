@@ -1,14 +1,8 @@
-// assets
-import { LoginOutlined, ProfileOutlined, MessageOutlined } from '@ant-design/icons';
+import { MessageOutlined } from '@ant-design/icons';
 
-// icons
 const icons = {
-    LoginOutlined,
-    ProfileOutlined,
     MessageOutlined
 };
-
-// ==============================|| MENU ITEMS - EXTRA PAGES ||============================== //
 
 const pages = {
     id: 'additional',

@@ -1,16 +1,13 @@
-// types
 import { createSlice } from '@reduxjs/toolkit';
 
-// initial state
 const initialState = {
     openItem: ['dashboard'],
     openComponent: 'buttons',
     drawerOpen: false,
     componentDrawerOpen: true,
-    isAuth: false
+    isAuth: false,
+    role: ""
 };
-
-// ==============================|| SLICE - MENU ||============================== //
 
 const menu = createSlice({
     name: 'menu',
@@ -34,6 +31,7 @@ const menu = createSlice({
 
         login(state, action) {
             state.isAuth = action.payload.isAuth;
+            state.role = action.payload.role;
         },
 
         logout(state, action) {

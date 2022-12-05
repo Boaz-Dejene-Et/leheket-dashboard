@@ -1,4 +1,3 @@
-// assets
 import {
     AppstoreAddOutlined,
     AntDesignOutlined,
@@ -6,10 +5,10 @@ import {
     BgColorsOutlined,
     FontSizeOutlined,
     LoadingOutlined,
-    PlusOutlined
+    PlusOutlined,
+    UsergroupAddOutlined
 } from '@ant-design/icons';
 
-// icons
 const icons = {
     FontSizeOutlined,
     BgColorsOutlined,
@@ -17,10 +16,9 @@ const icons = {
     AntDesignOutlined,
     LoadingOutlined,
     AppstoreAddOutlined,
-    PlusOutlined
+    PlusOutlined,
+    UsergroupAddOutlined
 };
-
-// ==============================|| MENU ITEMS - UTILITIES ||============================== //
 
 const utilities = {
     id: 'utilities',
@@ -34,35 +32,13 @@ const utilities = {
             url: '/add_book',
             icon: icons.PlusOutlined
         },
-        // {
-        //     id: 'util-typography',
-        //     title: 'Typography',
-        //     type: 'item',
-        //     url: '/typography',
-        //     icon: icons.FontSizeOutlined
-        // },
-        // {
-        //     id: 'util-color',
-        //     title: 'Color',
-        //     type: 'item',
-        //     url: '/color',
-        //     icon: icons.BgColorsOutlined
-        // },
-        // {
-        //     id: 'util-shadow',
-        //     title: 'Shadow',
-        //     type: 'item',
-        //     url: '/shadow',
-        //     icon: icons.BarcodeOutlined
-        // },
-        // {
-        //     id: 'ant-icons',
-        //     title: 'Ant Icons',
-        //     type: 'item',
-        //     url: '/icons/ant',
-        //     icon: icons.AntDesignOutlined,
-        //     breadcrumbs: false
-        // }
+        {
+            id: 'add-employee',
+            title: 'Add Employee',
+            type: 'item',
+            url: '/add_employee',
+            icon: icons.UsergroupAddOutlined
+        }
     ]
 };
 

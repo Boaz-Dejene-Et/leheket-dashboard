@@ -2,11 +2,13 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Box, Link, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, ToggleButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
 import NumberFormat from 'react-number-format';
 import Dot from 'components/@extended/Dot';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { LoadingOutlined } from '@ant-design/icons';
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -36,16 +38,22 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'Users Id.',
+        id: 'Employees Id.',
         align: 'left',
         disablePadding: false,
-        label: 'Users Id.'
+        label: 'Employees Id.'
     },
     {
-        id: 'Username',
+        id: 'First Name',
         align: 'left',
         disablePadding: true,
-        label: 'Username'
+        label: 'First Name'
+    },
+    {
+        id: 'Last Name',
+        align: 'left',
+        disablePadding: true,
+        label: 'Last Name'
     },
     {
         id: 'Email',
@@ -60,16 +68,21 @@ const headCells = [
         label: 'Role'
     },
     {
-        id: 'Total Amount',
+        id: 'Age',
         align: 'right',
         disablePadding: false,
-        label: 'Total Amount'
+        label: 'Age'
+    },    {
+        id: 'Salary',
+        align: 'right',
+        disablePadding: false,
+        label: 'Salary'
     },
     {
-        id: 'Delete user',
+        id: 'Deactivate Employee',
         align: 'right',
         disablePadding: false,
-        label: 'Delete user'
+        label: 'Deactivate Employee'
     }
 ];
 
@@ -97,22 +110,18 @@ OrderTableHead.propTypes = {
     orderBy: PropTypes.string
 };
 
-const OrderStatus = ({ role }) => {
+const OrderStatus = ({ active }) => {
     let color;
     let title;
 
-    switch (role) {
-        case "user":
+    switch (active) {
+        case true:
             color = 'success';
-            title = 'User';
-            break;
-        case "admin":
-            color = 'warning';
-            title = 'Admin';
+            title = 'active';
             break;
         default:
             color = 'primary';
-            title = 'User';
+            title = 'deactivated';
     }
 
     return (
@@ -127,20 +136,22 @@ OrderStatus.propTypes = {
     status: PropTypes.number
 };
 
-export default function OrderTable({users}) {
-    const deleteUser = (id) => {
-        const query = `mutation MyQuery($id: String!) {
-            delete_user_by_pk(id: $id) {
-                amount
-                email
-                image
-                name
+export default function OrderTable({employees, GetEmployees}) {
+    const [disabled, setDisabled] = useState(false)
+
+    const deactivateEmployee = (id, isActive) => {
+        console.log(isActive)
+        setDisabled(true)
+        const query = `mutation MyQuery($id: uuid!, $isActive: Boolean!) {
+            update_employee_by_pk(pk_columns: {id: $id}, _set: {isActive: $isActive}) {
+              email
+              isActive
             }
         }`
         
         axios.post("https://leheket-hilcoe-55.hasura.app/v1/graphql", JSON.stringify({
             query: query,
-            variables: {id: id}
+            variables: {id: id, isActive: isActive}
         }),{
             headers: {
                 "x-hasura-admin-secret": "3YX812ege3703HRPFtdbdPRIEe0iRXuO6CE9buCsn1nEjGMSxKXJZTJUrHWZiZ1b",
@@ -149,8 +160,14 @@ export default function OrderTable({users}) {
             }
         }).then((res) => {
             console.log(res.data);
-            if(res.data?.data?.delete_user_by_pk) {
-                toast.success("User deleted")
+            if(res.data?.data?.update_employee_by_pk) {
+                if(res.data?.data?.update_employee_by_pk.isActive) {
+                    toast.success("Employee Activated")
+                } else if(!res.data?.data?.update_employee_by_pk.isActive) {
+                    toast.success("Employee Deactivated")
+                }
+                GetEmployees()
+                setDisabled(false)
             } else {
                 toast.error("something went wrong")
             }
@@ -162,7 +179,7 @@ export default function OrderTable({users}) {
     }
     const [order] = useState('asc');
     const [orderBy] = useState('trackingNo');
-    console.log(users)
+    console.log(employees)
     const [selected] = useState([]);
 
     const isSelected = (trackingNo) => selected.indexOf(trackingNo) !== -1;
@@ -192,7 +209,7 @@ export default function OrderTable({users}) {
                 >
                     <OrderTableHead order={order} orderBy={orderBy} />
                     <TableBody>
-                        {stableSort(users, getComparator(order, orderBy)).map((row, index) => {
+                        {stableSort(employees, getComparator(order, orderBy)).map((row, index) => {
                             const isItemSelected = isSelected(row.id);
                             const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -211,23 +228,27 @@ export default function OrderTable({users}) {
                                             {row.id.slice(0,8)}
                                         </Link>
                                     </TableCell>
-                                    <TableCell align="left">{row.name}</TableCell>
+                                    <TableCell align="left">{row.firstName}</TableCell>
+                                    <TableCell align="left">{row.lastName}</TableCell>
                                     <TableCell align="right">{row.email}</TableCell>
                                     <TableCell align="left">
-                                        <OrderStatus role={row.role} />
+                                        <OrderStatus active={row.isActive} />
                                     </TableCell>
+                                    <TableCell align="right">{row.age}</TableCell>
                                     <TableCell align="right">
-                                        <NumberFormat value={row.amount} displayType="text" thousandSeparator prefix="Br." />
+                                        <NumberFormat value={row.salary} displayType="text" thousandSeparator prefix="Br." />
                                     </TableCell>
                                     <TableCell align="right">
                                     <ToggleButton
+                                        disabled={disabled}
                                         value="check"
                                         // selected={selected}
                                         onChange={() => {
-                                            deleteUser(row.id)
+                                            console.log(row.isActive)
+                                            deactivateEmployee(row.id, row.isActive === true ? false : true)
                                         }}
                                     >
-                                        <DeleteIcon />
+                                        {disabled ? <LoadingOutlined /> : !row.isActive ? <CheckCircleIcon color="success" /> : <CancelIcon color="disabled" />}
                                     </ToggleButton>
                                     </TableCell>
                                 </TableRow>

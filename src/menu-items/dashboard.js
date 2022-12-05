@@ -1,16 +1,13 @@
-// assets
-import { DashboardOutlined, UserOutlined, ReadOutlined, DollarCircleOutlined, AppstoreAddOutlined } from '@ant-design/icons';
+import { DashboardOutlined, UserOutlined, ReadOutlined, DollarCircleOutlined, AppstoreAddOutlined, TeamOutlined } from '@ant-design/icons';
 
-// icons
 const icons = {
     DashboardOutlined,
     UserOutlined,
     ReadOutlined,
     DollarCircleOutlined,
-    AppstoreAddOutlined
+    AppstoreAddOutlined,
+    TeamOutlined
 };
-
-// ==============================|| MENU ITEMS - DASHBOARD ||============================== //
 
 const dashboard = {
     id: 'group-dashboard',
@@ -23,6 +20,14 @@ const dashboard = {
             type: 'item',
             url: '/',
             icon: icons.AppstoreAddOutlined,
+            breadcrumbs: false
+        },
+        {
+            id: 'employees',
+            title: 'Employees',
+            type: 'item',
+            url: '/employees',
+            icon: icons.TeamOutlined,
             breadcrumbs: false
         },
         {
