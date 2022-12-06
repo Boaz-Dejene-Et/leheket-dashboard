@@ -34,9 +34,24 @@ const Login = () => {
         e.preventDefault()
         if(e.target.email.value == "boazdeju@gmail.com" && e.target.password.value == "123456") {
             console.log(e.target.email.value, e.target.password.value)
-            dispatch(login({ isAuth: true, role: "Admin" }));
+            dispatch(login({ 
+                isAuth: true, 
+                user: {
+                    firstName: "boaz",
+                    lastName: "Dejene",
+                    email: "boazdeju@gmail.com"
+                }, 
+                role: "Admin" }));
         } else {
-            dispatch(login({ isAuth: true, role: "Employee" }));
+            dispatch(login({ 
+                isAuth: true,
+                user: {
+                    firstName: "employee",
+                    lastName: "Talem",
+                    email: "employe@gmail.com"
+                }, 
+                role: "Employee" 
+            }));
             // e.target.email.value
             // e.target.password.value
         }

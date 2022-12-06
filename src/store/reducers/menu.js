@@ -6,6 +6,11 @@ const initialState = {
     drawerOpen: false,
     componentDrawerOpen: true,
     isAuth: false,
+    user: {
+        firstName: "",
+        lastName: "",
+        email: ""
+    },
     role: ""
 };
 
@@ -32,10 +37,17 @@ const menu = createSlice({
         login(state, action) {
             state.isAuth = action.payload.isAuth;
             state.role = action.payload.role;
+            state.user = action.payload.user
         },
 
         logout(state, action) {
             state.isAuth = action.payload.isAuth;
+            state.role = "";
+            state.user = {
+                firstName: "",
+                lastName: "",
+                email: ""
+            }
         }
     }
 });

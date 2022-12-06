@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import {
     Avatar,
@@ -18,7 +18,7 @@ import MainCard from 'components/MainCard';
 import Transitions from 'components/@extended/Transitions';
 import avatar3 from 'assets/images/users/avatar-3.jpg';
 import { LogoutOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from 'store/reducers/menu';
 
 function TabPanel({ children, value, index, ...other }) {
@@ -36,8 +36,13 @@ TabPanel.propTypes = {
 };
 
 const Profile = () => {
+    const user = useSelector(state => state.menu)
     const dispatch = useDispatch();
     const theme = useTheme();
+    
+    useEffect(()=>{
+        console.log(user)
+    },[])
 
     const handleLogout = async () => {
         dispatch(logout({ isAuth: false }));
