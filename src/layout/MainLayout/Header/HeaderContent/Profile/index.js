@@ -36,7 +36,8 @@ TabPanel.propTypes = {
 };
 
 const Profile = () => {
-    const user = useSelector(state => state.menu)
+    const user = useSelector(state => state.menu.user)
+    const role = useSelector(state => state.menu.role)
     const dispatch = useDispatch();
     const theme = useTheme();
     
@@ -79,8 +80,8 @@ const Profile = () => {
                 onClick={handleToggle}
             >
                 <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
-                    <Avatar alt="profile user" src={avatar3} sx={{ width: 32, height: 32 }} />
-                    <Typography variant="subtitle1">Boaz Deju</Typography>
+                    <Avatar alt="profile user" src={role === "Admin" ? avatar3 : "https://images.unsplash.com/photo-1670370809845-4e40301ef55a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"} sx={{ width: 32, height: 32 }} />
+                    <Typography variant="subtitle1">{user.firstName} {user.lastName}</Typography>
                 </Stack>
             </ButtonBase>
             <Popper
@@ -121,11 +122,11 @@ const Profile = () => {
                                             <Grid container justifyContent="space-between" alignItems="center">
                                                 <Grid item>
                                                     <Stack direction="row" spacing={1.25} alignItems="center">
-                                                        <Avatar alt="profile user" src={avatar3} sx={{ width: 32, height: 32 }} />
+                                                        <Avatar alt="profile user" src={role === "Admin" ? avatar3 : "https://images.unsplash.com/photo-1670370809845-4e40301ef55a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"} sx={{ width: 32, height: 32 }} />
                                                         <Stack>
-                                                            <Typography variant="h6">Boaz Deju</Typography>
+                                                            <Typography variant="h6">{user.firstName} {user.lastName}</Typography>
                                                             <Typography variant="body2" color="textSecondary">
-                                                                Admin
+                                                                {role}
                                                             </Typography>
                                                         </Stack>
                                                     </Stack>

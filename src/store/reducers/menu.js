@@ -11,7 +11,7 @@ const initialState = {
         lastName: "",
         email: ""
     },
-    role: ""
+    role: "",
 };
 
 const menu = createSlice({

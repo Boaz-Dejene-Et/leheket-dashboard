@@ -139,11 +139,11 @@ OrderStatus.propTypes = {
 export default function OrderTable({employees, GetEmployees}) {
     const [disabled, setDisabled] = useState(false)
 
-    const deactivateEmployee = (id, isActive) => {
+    const deactivateEmployee = (email, isActive) => {
         console.log(isActive)
         setDisabled(true)
-        const query = `mutation MyQuery($id: uuid!, $isActive: Boolean!) {
-            update_employee_by_pk(pk_columns: {id: $id}, _set: {isActive: $isActive}) {
+        const query = `mutation MyQuery($email: String!, $isActive: Boolean!) {
+            update_employee_by_pk(pk_columns: {email: $email}, _set: {isActive: $isActive}) {
               email
               isActive
             }
@@ -151,7 +151,7 @@ export default function OrderTable({employees, GetEmployees}) {
         
         axios.post("https://leheket-hilcoe-55.hasura.app/v1/graphql", JSON.stringify({
             query: query,
-            variables: {id: id, isActive: isActive}
+            variables: {email: email, isActive: isActive}
         }),{
             headers: {
                 "x-hasura-admin-secret": "3YX812ege3703HRPFtdbdPRIEe0iRXuO6CE9buCsn1nEjGMSxKXJZTJUrHWZiZ1b",
@@ -167,13 +167,14 @@ export default function OrderTable({employees, GetEmployees}) {
                     toast.success("Employee Deactivated")
                 }
                 GetEmployees()
-                setDisabled(false)
             } else {
                 toast.error("something went wrong")
             }
+            setDisabled(false)
         }).catch((err) => {
             console.log(err)
             console.log(err?.response?.data)
+            setDisabled(false)
             toast.error("something went wrong")
         })
     }
@@ -245,7 +246,7 @@ export default function OrderTable({employees, GetEmployees}) {
                                         // selected={selected}
                                         onChange={() => {
                                             console.log(row.isActive)
-                                            deactivateEmployee(row.id, row.isActive === true ? false : true)
+                                            deactivateEmployee(row.email, row.isActive === true ? false : true)
                                         }}
                                     >
                                         {disabled ? <LoadingOutlined /> : !row.isActive ? <CheckCircleIcon color="success" /> : <CancelIcon color="disabled" />}

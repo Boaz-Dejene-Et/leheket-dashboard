@@ -38,7 +38,6 @@ const actionSX = {
 
 const DashboardDefault = () => {
     const navigate = useNavigate();
-    const role = useSelector((state) => state.menu);
     const [orderedBooks, setOrderedBooks] = useState([]);
     const [totalOrders, setTotalOrders] = useState(0);
     const [totalOrderedBooks, setTotalOrderedBooks] = useState(0);
@@ -108,10 +107,6 @@ const DashboardDefault = () => {
     useEffect(()=>{
         GetOrders()
     },[])
-
-    useEffect(()=>{
-        console.log(role)
-    }, [role])
 
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75}>

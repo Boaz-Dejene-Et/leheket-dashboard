@@ -22,6 +22,7 @@ const AuthLogin = Loadable(lazy(() => import('pages/authentication/Login')));
 
 const App = () => {
     const isAuth = useSelector((state) => state.menu.isAuth);
+    const role = useSelector((state) => state.menu.role);
 
     return(
         <ThemeCustomization>
@@ -35,19 +36,23 @@ const App = () => {
                             <Route path="books" element={<Books />} />
                             <Route path="books/edit-book/:id" element={<EditBook />} />
                             <Route path="add_book" element={<AddBook />} />
-                            <Route path="employees" element={<Employees />} />
-                            <Route path="add_employee" element={<AddEmployee />} />
+                            {role === "Admin" ? (
+                                <>
+                                    <Route path="employees" element={<Employees />} />
+                                    <Route path="add_employee" element={<AddEmployee />} />
+                                </>
+                            ) : null}
                             <Route path="users" element={<Users />} />
                             <Route path="notification" element={<Notification />} />
                         </Route>
                     ) : (
                         <>
-                            <Route path="/" element={<MinimalLayout />}>
-                                <Route path="/" element={<AuthLogin />} replace />
+                            <Route path="/login" element={<MinimalLayout />}>
+                                <Route path="/login" element={<AuthLogin />} replace />
                             </Route>
                             <Route
                                 path="*"
-                                element={<Navigate to="/" replace />}
+                                element={<Navigate to="/login" replace />}
                             />
                         </>
                     )}

@@ -17,11 +17,17 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { login } from 'store/reducers/menu';
 import { useDispatch } from 'react-redux';
+import axios from 'axios'
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
+    const [email, setEmail] = useState(false);
+    const [password, setPassword] = useState(false);
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
@@ -33,7 +39,7 @@ const Login = () => {
     const handleSubmitNew = (e) => {
         e.preventDefault()
         if(e.target.email.value == "boazdeju@gmail.com" && e.target.password.value == "123456") {
-            console.log(e.target.email.value, e.target.password.value)
+            // console.log(e.target.email.value, e.target.password.value)
             dispatch(login({ 
                 isAuth: true, 
                 user: {
@@ -42,16 +48,48 @@ const Login = () => {
                     email: "boazdeju@gmail.com"
                 }, 
                 role: "Admin" }));
+            navigate('/')
         } else {
-            dispatch(login({ 
-                isAuth: true,
-                user: {
-                    firstName: "employee",
-                    lastName: "Talem",
-                    email: "employe@gmail.com"
-                }, 
-                role: "Employee" 
-            }));
+            const query = `query MyQuery($email: String!) {
+                employee_by_pk(email: $email) {
+                    password
+                    firstName
+                    lastName
+                    email
+                }
+            }`
+
+            axios.post("https://leheket-hilcoe-55.hasura.app/v1/graphql", JSON.stringify({
+                query: query,
+                variables: {email: e.target.email.value}
+            }),{
+                headers: {
+                    "x-hasura-admin-secret": "3YX812ege3703HRPFtdbdPRIEe0iRXuO6CE9buCsn1nEjGMSxKXJZTJUrHWZiZ1b",
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            }).then((res) => {
+                console.log(res.data);
+                if(res.data?.data?.employee_by_pk === null) {
+                    toast.warning("Email not Found")
+                } else if(res.data?.data?.employee_by_pk?.password !== e.target.password.value) {
+                    toast.warning("Password not correct")
+                } else if(res.data?.data?.employee_by_pk?.password === e.target.password.value) {
+                    dispatch(login({ 
+                        isAuth: true,
+                        user: {
+                            firstName: res.data?.data?.employee_by_pk?.firstName,
+                            lastName: res.data?.data?.employee_by_pk?.lastName,
+                            email: res.data?.data?.employee_by_pk?.email
+                        }, 
+                        role: "Employee" 
+                    }));
+                    navigate('/')
+                }
+            }).catch((err) => {
+                console.log(err)
+                console.log(err.response?.data)
+            })
             // e.target.email.value
             // e.target.password.value
         }
